@@ -9,12 +9,4 @@ export class LocalStorageRepository implements StorageRepository {
   set<T>(key: string, value: T): void {
     localStorage.setItem(key, JSON.stringify(value));
   }
-
-  remove(key: string): void {
-    localStorage.removeItem(key);
-  }
-
-  clear(): void {
-    localStorage.clear();
-  }
 }

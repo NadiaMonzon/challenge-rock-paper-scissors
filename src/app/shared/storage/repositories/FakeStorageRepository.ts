@@ -10,12 +10,4 @@ export class FakeStorageRepository implements StorageRepository {
   set<T>(key: string, value: T): void {
     this.store.set(key, value);
   }
-
-  remove(key: string): void {
-    this.store.delete(key);
-  }
-
-  clear(): void {
-    this.store.clear();
-  }
 }
