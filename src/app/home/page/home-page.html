@@ -9,4 +9,4 @@
 </small>
 }
 
-<button routerLink="/game" [disabled]="!isValid()">Join</button>
+<button (click)="onJoin()" [disabled]="!isValid()">Join</button>

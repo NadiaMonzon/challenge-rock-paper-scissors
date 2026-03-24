@@ -1,7 +1,7 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { HomePage } from './home-page';
 
 describe('HomePage', () => {
@@ -37,6 +37,16 @@ describe('HomePage', () => {
       const input = fixture.debugElement.query(By.css('input'));
       expect(input.nativeElement.getAttribute('aria-invalid')).toBe('true');
     });
+
+    it('should not navigate on join', () => {
+      const router = TestBed.inject(Router);
+      const navigateSpy = vitest.spyOn(router, 'navigate');
+
+      const button = fixture.debugElement.query(By.css('button'));
+      button.nativeElement.click();
+
+      expect(navigateSpy).not.toHaveBeenCalled();
+    });
   });
 
   describe('when the input has a value', () => {
@@ -60,6 +70,16 @@ describe('HomePage', () => {
     it('should not mark the input as aria-invalid', () => {
       const input = fixture.debugElement.query(By.css('input'));
       expect(input.nativeElement.getAttribute('aria-invalid')).toBeNull();
+    });
+
+    it('should navigate on join', () => {
+      const router = TestBed.inject(Router);
+      const navigateSpy = vitest.spyOn(router, 'navigate');
+
+      const button = fixture.debugElement.query(By.css('button'));
+      button.triggerEventHandler('click', null);
+
+      expect(navigateSpy).toHaveBeenCalledExactlyOnceWith(['/game']);
     });
   });
 
