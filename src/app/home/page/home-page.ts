@@ -12,7 +12,7 @@ export class HomePage {
   name = signal('');
   isValid = computed(() => this.name().trim().length > 0);
 
-  onNameInput(event: Event) {
+  public onNameInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.name.set(input.value);
   }
