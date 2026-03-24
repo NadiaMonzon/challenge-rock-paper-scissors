@@ -1,6 +1,6 @@
-import { StorageRepository } from './StorageRepository';
+import type { StorageRepository } from './StorageRepository';
 
-export class FakeStorageRepository extends StorageRepository {
+export class FakeStorageRepository implements StorageRepository {
   private store = new Map<string, unknown>();
 
   get<T>(key: string): T | null {

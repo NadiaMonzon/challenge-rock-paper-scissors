@@ -1,6 +1,6 @@
-import { StorageRepository } from './StorageRepository';
+import type { StorageRepository } from './StorageRepository';
 
-export class LocalStorageRepository extends StorageRepository {
+export class LocalStorageRepository implements StorageRepository {
   get<T>(key: string): T | null {
     const item = localStorage.getItem(key);
     return item ? (JSON.parse(item) as T) : null;
