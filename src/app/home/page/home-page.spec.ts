@@ -2,6 +2,11 @@ import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
+import { LocalStoragePlayerRepository } from '../../player/repositories/LocalStoragePlayerRepository';
+import { PlayerRepository } from '../../player/repositories/PlayerRepository';
+import { JoinPlayerCommand } from '../../player/services/JoinPlayerCommand';
+import { LocalStorageRepository } from '../../shared/storage/repositories/LocalStorageRepository';
+import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
 import { HomePage } from './home-page';
 
 describe('HomePage', () => {
@@ -10,7 +15,12 @@ describe('HomePage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HomePage],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        { provide: StorageRepository, useClass: LocalStorageRepository },
+        { provide: PlayerRepository, useClass: LocalStoragePlayerRepository },
+        JoinPlayerCommand,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
