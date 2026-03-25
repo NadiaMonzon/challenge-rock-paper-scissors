@@ -36,7 +36,6 @@ export class GamePage {
   private getWinnerService = inject(GetWinnerService);
   private getRandomMoveService = inject(GetRandomMoveService);
   private savePlayerScoreService = inject(SavePlayerScoreService);
-  private setCurrentPlayerCommand = inject(SetCurrentPlayerCommand);
 
   protected readonly moves = MOVES;
   protected player1Move = signal<GameMove | null>(null);

@@ -6,7 +6,8 @@
     <fieldset>
         <legend>Choose your move</legend>
         @for (move of moves; track move) {
-        <button (click)="onSelectMove(move)" [disabled]="isRevealing()" [attr.aria-pressed]="player1Move() === move">
+        <button (click)="onSelectMove(move)" [disabled]="isRevealing()" [attr.aria-pressed]="player1Move() === move"
+            [attr.aria-label]="move">
             {{ move }}
         </button>
         }
