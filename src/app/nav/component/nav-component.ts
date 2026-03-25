@@ -1,12 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { PlayerSessionService } from '../../player/services/PlayerSessionService';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav-component.html',
-  imports: [RouterLink, RouterOutlet],
+  styleUrl: './nav-component.scss',
+  imports: [RouterOutlet],
 })
 export class NavComponent {
   protected playerSession = inject(PlayerSessionService);
+  private router = inject(Router);
+
+  protected onLogout(): void {
+    this.playerSession.logout();
+    this.router.navigate(['/']);
+  }
 }
