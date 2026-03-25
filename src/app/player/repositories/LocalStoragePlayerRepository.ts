@@ -15,4 +15,12 @@ export class LocalStoragePlayerRepository implements PlayerRepository {
     this.storageRepository.set('players', [...players, newPlayer]);
     return newPlayer;
   }
+
+  save(player: PlayerModel): void {
+    const playersList = this.storageRepository.get<PlayerModel[]>('players') ?? [];
+    this.storageRepository.set(
+      'players',
+      playersList.map((storedPlayer) => (storedPlayer.id === player.id ? player : storedPlayer)),
+    );
+  }
 }

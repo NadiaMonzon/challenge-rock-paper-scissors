@@ -1,0 +1,38 @@
+<section aria-label="Rock Paper Scissors game">
+    <header>
+        <p>{{ playerName() }}'s score: <strong>{{ score() }}</strong></p>
+    </header>
+
+    <fieldset>
+        <legend>Choose your move</legend>
+        @for (move of moves; track move) {
+        <button (click)="onSelectMove(move)" [disabled]="isRevealing()" [attr.aria-pressed]="player1Move() === move">
+            {{ move }}
+        </button>
+        }
+    </fieldset>
+
+    @if (player1Move()) {
+    <p>Your move: <strong>{{ player1Move() }}</strong></p>
+    }
+
+    <div aria-live="polite" aria-atomic="true">
+        @if (isRevealing()) {
+        <p aria-busy="true">Machine is thinking</p>
+        } @else if (oppponentMove()) {
+        <p>Machine's move: <strong>{{ oppponentMove() }}</strong></p>
+
+        @switch (result()) {
+        @case ('win') {
+        <p role="status">You win!</p>
+        }
+        @case ('lose') {
+        <p role="status">You lose.</p>
+        }
+        @case ('tie') {
+        <p role="status">It's a tie!</p>
+        }
+        }
+        }
+    </div>
+</section>
