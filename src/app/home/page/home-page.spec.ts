@@ -5,9 +5,9 @@ import { provideRouter, Router } from '@angular/router';
 import { JoinPlayerCommand } from '../../auth/commands/JoinPlayerCommand';
 import { SetCurrentPlayerCommand } from '../../auth/commands/SetCurrentPlayerCommand';
 import { CurrentPlayerStore } from '../../auth/store/CurrentPlayerStore';
-import { LocalStoragePlayerRepository } from '../../player/repositories/LocalStoragePlayerRepository';
+import { FakePlayerRepository } from '../../player/repositories/FakePlayerRepository';
 import { PlayerRepository } from '../../player/repositories/PlayerRepository';
-import { LocalStorageRepository } from '../../shared/storage/repositories/LocalStorageRepository';
+import { FakeStorageRepository } from '../../shared/storage/repositories/FakeStorageRepository';
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
 import { HomePage } from './home-page';
 
@@ -19,8 +19,8 @@ describe('HomePage', () => {
       imports: [HomePage],
       providers: [
         provideRouter([]),
-        { provide: StorageRepository, useClass: LocalStorageRepository },
-        { provide: PlayerRepository, useClass: LocalStoragePlayerRepository },
+        { provide: StorageRepository, useClass: FakeStorageRepository },
+        { provide: PlayerRepository, useClass: FakePlayerRepository },
         JoinPlayerCommand,
         SetCurrentPlayerCommand,
         CurrentPlayerStore,
