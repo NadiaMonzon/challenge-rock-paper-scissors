@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
 import { JoinPlayerCommand } from '../../auth/commands/JoinPlayerCommand';
 import { SetCurrentPlayerCommand } from '../../auth/commands/SetCurrentPlayerCommand';
+import { PlayerSessionService } from '../../auth/services/PlayerSessionService';
 import { LocalStoragePlayerRepository } from '../../player/repositories/LocalStoragePlayerRepository';
 import { PlayerRepository } from '../../player/repositories/PlayerRepository';
 import { LocalStorageRepository } from '../../shared/storage/repositories/LocalStorageRepository';
@@ -22,6 +23,7 @@ describe('HomePage', () => {
         { provide: PlayerRepository, useClass: LocalStoragePlayerRepository },
         JoinPlayerCommand,
         SetCurrentPlayerCommand,
+        PlayerSessionService,
       ],
     }).compileComponents();
 
