@@ -1,10 +1,12 @@
 import type { Routes } from '@angular/router';
+import { isPlayerLoggedInGuard } from './player/guards/is-player-logged-in.guard';
 
 export const routes: Routes = [
   { path: '', loadComponent: () => import('./home/page/home-page').then((m) => m.HomePage) },
   {
     path: '',
     loadComponent: () => import('./nav/component/nav-component').then((m) => m.NavComponent),
+    canActivateChild: [isPlayerLoggedInGuard],
     children: [
       {
         path: 'game',
