@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
 import type { PlayerModel } from '../models/PlayerModel';
-import { PlayerRepository } from './PlayerRepository';
+import type { PlayerRepository } from './PlayerRepository';
 
-export class LocalStoragePlayerRepository extends PlayerRepository {
+export class LocalStoragePlayerRepository implements PlayerRepository {
   private storageRepository = inject(StorageRepository);
 
   findOrCreate(name: string): PlayerModel {
