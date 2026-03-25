@@ -25,9 +25,20 @@ describe('HomePage', () => {
         SetCurrentPlayerCommand,
         CurrentPlayerStore,
       ],
-    }).compileComponents();
+    })
+      .overrideComponent(HomePage, {
+        set: {
+          providers: [
+            { provide: PlayerRepository, useClass: FakePlayerRepository },
+            SetCurrentPlayerCommand,
+            JoinPlayerCommand,
+          ],
+        },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
+
     fixture.detectChanges();
   });
 
