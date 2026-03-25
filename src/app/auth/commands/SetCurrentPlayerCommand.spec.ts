@@ -10,7 +10,7 @@ describe('SetCurrentPlayerCommand', () => {
   let store: CurrentPlayerStore;
   let fakeStorage: FakeStorageRepository;
 
-  const player: PlayerModel = { id: 1, name: 'Alice', score: 0, moveHistory: [] };
+  const player: PlayerModel = { id: 1, name: 'Alice', score: 0 };
 
   beforeEach(() => {
     fakeStorage = new FakeStorageRepository();

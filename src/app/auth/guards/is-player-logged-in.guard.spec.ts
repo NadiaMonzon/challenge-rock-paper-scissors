@@ -29,8 +29,8 @@ describe('isPlayerLoggedInGuard', () => {
 
   describe('when the player is logged in', () => {
     it('should return true', () => {
-      fakeStorage.set(CURRENT_PLAYER_KEY, { id: 1, name: 'Alice', score: 0, moveHistory: [] });
-      store.currentPlayer.set({ id: 1, name: 'Alice', score: 0, moveHistory: [] });
+      fakeStorage.set(CURRENT_PLAYER_KEY, { id: 1, name: 'Alice', score: 0 });
+      store.currentPlayer.set({ id: 1, name: 'Alice', score: 0 });
 
       expect(runGuard()).toBe(true);
     });

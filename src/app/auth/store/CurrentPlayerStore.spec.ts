@@ -25,7 +25,7 @@ describe('CurrentPlayerStore', () => {
 
   describe('when there is a player in storage', () => {
     it('should initialize currentPlayer from storage', () => {
-      const player = { id: 1, name: 'Alice', score: 0, moveHistory: [] };
+      const player = { id: 1, name: 'Alice', score: 0 };
       fakeStorage.set(CURRENT_PLAYER_KEY, player);
 
       TestBed.resetTestingModule();
