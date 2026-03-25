@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { FakeStorageRepository } from '../../shared/storage/repositories/FakeStorageRepository';
+import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
 import type { PlayerModel } from '../models/PlayerModel';
 import { FakePlayerRepository } from '../repositories/FakePlayerRepository';
 import { PlayerRepository } from '../repositories/PlayerRepository';
@@ -13,7 +15,11 @@ describe('JoinPlayerCommand', () => {
     fakeRepository = new FakePlayerRepository();
 
     TestBed.configureTestingModule({
-      providers: [JoinPlayerCommand, { provide: PlayerRepository, useValue: fakeRepository }],
+      providers: [
+        JoinPlayerCommand,
+        { provide: PlayerRepository, useValue: fakeRepository },
+        { provide: StorageRepository, useClass: FakeStorageRepository },
+      ],
     });
 
     command = TestBed.inject(JoinPlayerCommand);
