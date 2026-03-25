@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
 import type { PlayerModel } from '../models/PlayerModel';
-import { PlayerRepository } from './PlayerRepository';
+import type { PlayerRepository } from './PlayerRepository';
 
-export class LocalStoragePlayerRepository extends PlayerRepository {
+export class LocalStoragePlayerRepository implements PlayerRepository {
   private storageRepository = inject(StorageRepository);
 
   findOrCreate(name: string): PlayerModel {
@@ -11,8 +11,16 @@ export class LocalStoragePlayerRepository extends PlayerRepository {
     const existing = players.find((p) => p.name === name);
     if (existing) return existing;
 
-    const newPlayer: PlayerModel = { id: Date.now(), name, score: 0, moveHistory: [] };
+    const newPlayer: PlayerModel = { id: Date.now(), name, score: 0 };
     this.storageRepository.set('players', [...players, newPlayer]);
     return newPlayer;
+  }
+
+  save(player: PlayerModel): void {
+    const playersList = this.storageRepository.get<PlayerModel[]>('players') ?? [];
+    this.storageRepository.set(
+      'players',
+      playersList.map((storedPlayer) => (storedPlayer.id === player.id ? player : storedPlayer)),
+    );
   }
 }

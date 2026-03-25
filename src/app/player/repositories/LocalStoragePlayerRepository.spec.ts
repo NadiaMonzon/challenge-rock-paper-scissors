@@ -31,11 +31,6 @@ describe('LocalStoragePlayerRepository', () => {
       expect(player.score).toBe(0);
     });
 
-    it('should return a new player with empty moveHistory', () => {
-      const player = repository.findOrCreate('Alice');
-      expect(player.moveHistory).toEqual([]);
-    });
-
     it('should persist the new player in storage', () => {
       repository.findOrCreate('Alice');
       const players = storageRepository.get<PlayerModel[]>('players');

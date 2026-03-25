@@ -1,0 +1,10 @@
+<header>
+    <nav>
+        <ul>
+            <li>Hi, {{ playerSession.currentPlayer()?.name }}</li>
+            <li><button (click)="onLogout()">log out</button></li>
+        </ul>
+    </nav>
+</header>
+
+<router-outlet />

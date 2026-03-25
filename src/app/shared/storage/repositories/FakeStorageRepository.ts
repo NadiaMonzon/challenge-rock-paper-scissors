@@ -1,6 +1,6 @@
-import { StorageRepository } from './StorageRepository';
+import type { StorageRepository } from './StorageRepository';
 
-export class FakeStorageRepository extends StorageRepository {
+export class FakeStorageRepository implements StorageRepository {
   private store = new Map<string, unknown>();
 
   get<T>(key: string): T | null {
@@ -9,13 +9,5 @@ export class FakeStorageRepository extends StorageRepository {
 
   set<T>(key: string, value: T): void {
     this.store.set(key, value);
-  }
-
-  remove(key: string): void {
-    this.store.delete(key);
-  }
-
-  clear(): void {
-    this.store.clear();
   }
 }

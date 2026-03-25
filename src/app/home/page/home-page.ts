@@ -1,8 +1,9 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { JoinPlayerCommand } from '../../auth/commands/JoinPlayerCommand';
+import { SetCurrentPlayerCommand } from '../../auth/commands/SetCurrentPlayerCommand';
 import { LocalStoragePlayerRepository } from '../../player/repositories/LocalStoragePlayerRepository';
 import { PlayerRepository } from '../../player/repositories/PlayerRepository';
-import { JoinPlayerCommand } from '../../player/services/JoinPlayerCommand';
 
 @Component({
   selector: 'app-home-page',
@@ -10,6 +11,7 @@ import { JoinPlayerCommand } from '../../player/services/JoinPlayerCommand';
   styleUrl: './home-page.scss',
   providers: [
     { provide: PlayerRepository, useClass: LocalStoragePlayerRepository },
+    SetCurrentPlayerCommand,
     JoinPlayerCommand,
   ],
 })
@@ -27,7 +29,8 @@ export class HomePage {
 
   public onJoin(): void {
     if (!this.isValid()) return;
-    this.joinPlayerCommand.execute(this.name().trim());
+    const name = this.name().trim();
+    this.joinPlayerCommand.execute(name);
     this.router.navigate(['/game']);
   }
 }
