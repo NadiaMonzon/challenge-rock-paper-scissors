@@ -30,17 +30,19 @@ describe('GamePage', () => {
         CurrentPlayerStore,
         { provide: StorageRepository, useClass: FakeStorageRepository },
       ],
-    })
-      .overrideComponent(GamePage, {
-        set: {
-          providers: [
-            { provide: GetRandomMoveService, useValue: fakeGetRandomMove },
-            { provide: GetWinnerService, useValue: fakeGetWinner },
-            { provide: SavePlayerScoreService, useValue: fakeSaveScore },
-          ],
-        },
-      })
-      .compileComponents();
+    });
+
+    TestBed.overrideProvider(GetRandomMoveService, {
+      useValue: fakeGetRandomMove,
+    });
+    TestBed.overrideProvider(GetWinnerService, {
+      useValue: fakeGetWinner,
+    });
+    TestBed.overrideProvider(SavePlayerScoreService, {
+      useValue: fakeSaveScore,
+    });
+
+    await TestBed.compileComponents();
 
     playerStore = TestBed.inject(CurrentPlayerStore);
     playerStore.currentPlayer.set(PLAYER);
@@ -67,7 +69,7 @@ describe('GamePage', () => {
     beforeEach(() => {
       vitest.useFakeTimers();
       const rockButton = fixture.debugElement.query(By.css('button[aria-label="rock"]'));
-      rockButton.nativeElement.click();
+      rockButton.triggerEventHandler('click', null);
       fixture.detectChanges();
     });
 
@@ -122,7 +124,9 @@ describe('GamePage', () => {
           fakeGetWinner.execute.mockReturnValue('lose');
           fakeSaveScore.execute.mockClear();
 
-          fixture.debugElement.query(By.css('button[aria-label="paper"]')).nativeElement.click();
+          fixture.debugElement
+            .query(By.css('button[aria-label="paper"]'))
+            .triggerEventHandler('click', null);
           fixture.detectChanges();
           vitest.advanceTimersByTime(1000);
           fixture.detectChanges();
@@ -143,7 +147,9 @@ describe('GamePage', () => {
           fakeGetWinner.execute.mockReturnValue('tie');
           fakeSaveScore.execute.mockClear();
 
-          fixture.debugElement.query(By.css('button[aria-label="scissors"]')).nativeElement.click();
+          fixture.debugElement
+            .query(By.css('button[aria-label="scissors"]'))
+            .triggerEventHandler('click', null);
           fixture.detectChanges();
           vitest.advanceTimersByTime(1000);
           fixture.detectChanges();
