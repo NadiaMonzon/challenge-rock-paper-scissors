@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
+import type { PlayerModel } from '../../player/models/PlayerModel';
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
-import type { PlayerModel } from '../models/PlayerModel';
 
 const CURRENT_PLAYER_KEY = 'currentPlayer';
 

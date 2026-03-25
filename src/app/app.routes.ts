@@ -1,5 +1,5 @@
 import type { Routes } from '@angular/router';
-import { isPlayerLoggedInGuard } from './player/guards/is-player-logged-in.guard';
+import { isPlayerLoggedInGuard } from './auth/guards/is-player-logged-in.guard';
 
 export const routes: Routes = [
   { path: '', loadComponent: () => import('./home/page/home-page').then((m) => m.HomePage) },

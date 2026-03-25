@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { PlayerSessionService } from '../../player/services/PlayerSessionService';
+import { PlayerSessionService } from '../../auth/services/PlayerSessionService';
 
 @Component({
   selector: 'app-nav',

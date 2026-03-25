@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
-import { PlayerRepository } from '../repositories/PlayerRepository';
-import { PlayerSessionService } from './PlayerSessionService';
+import { PlayerRepository } from '../../player/repositories/PlayerRepository';
+import { PlayerSessionService } from '../services/PlayerSessionService';
 
 export class JoinPlayerCommand {
   private playerRepository = inject(PlayerRepository);

@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
+import type { PlayerModel } from '../../player/models/PlayerModel';
+import { FakePlayerRepository } from '../../player/repositories/FakePlayerRepository';
+import { PlayerRepository } from '../../player/repositories/PlayerRepository';
 import { FakeStorageRepository } from '../../shared/storage/repositories/FakeStorageRepository';
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
-import type { PlayerModel } from '../models/PlayerModel';
-import { FakePlayerRepository } from '../repositories/FakePlayerRepository';
-import { PlayerRepository } from '../repositories/PlayerRepository';
+import { PlayerSessionService } from '../services/PlayerSessionService';
 import { JoinPlayerCommand } from './JoinPlayerCommand';
-import { PlayerSessionService } from './PlayerSessionService';
 
 describe('JoinPlayerCommand', () => {
   let command: JoinPlayerCommand;
