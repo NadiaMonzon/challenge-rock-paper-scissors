@@ -27,7 +27,8 @@ export class HomePage {
 
   public onJoin(): void {
     if (!this.isValid()) return;
-    this.joinPlayerCommand.execute(this.name().trim());
+    const name = this.name().trim();
+    this.joinPlayerCommand.execute(name);
     this.router.navigate(['/game']);
   }
 }
