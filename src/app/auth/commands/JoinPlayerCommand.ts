@@ -1,13 +1,13 @@
 import { inject } from '@angular/core';
 import { PlayerRepository } from '../../player/repositories/PlayerRepository';
-import { PlayerSessionService } from '../services/PlayerSessionService';
+import { SetCurrentPlayerCommand } from './SetCurrentPlayerCommand';
 
 export class JoinPlayerCommand {
   private playerRepository = inject(PlayerRepository);
-  private playerSession = inject(PlayerSessionService);
+  private setCurrentPlayerCommand = inject(SetCurrentPlayerCommand);
 
   execute(name: string): void {
     const player = this.playerRepository.findOrCreate(name);
-    this.playerSession.setCurrentPlayer(player);
+    this.setCurrentPlayerCommand.execute(player);
   }
 }

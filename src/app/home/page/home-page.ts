@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { JoinPlayerCommand } from '../../auth/commands/JoinPlayerCommand';
+import { SetCurrentPlayerCommand } from '../../auth/commands/SetCurrentPlayerCommand';
 import { LocalStoragePlayerRepository } from '../../player/repositories/LocalStoragePlayerRepository';
 import { PlayerRepository } from '../../player/repositories/PlayerRepository';
 
@@ -10,6 +11,7 @@ import { PlayerRepository } from '../../player/repositories/PlayerRepository';
   styleUrl: './home-page.scss',
   providers: [
     { provide: PlayerRepository, useClass: LocalStoragePlayerRepository },
+    SetCurrentPlayerCommand,
     JoinPlayerCommand,
   ],
 })

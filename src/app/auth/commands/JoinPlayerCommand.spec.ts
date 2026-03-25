@@ -6,6 +6,7 @@ import { FakeStorageRepository } from '../../shared/storage/repositories/FakeSto
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
 import { PlayerSessionService } from '../services/PlayerSessionService';
 import { JoinPlayerCommand } from './JoinPlayerCommand';
+import { SetCurrentPlayerCommand } from './SetCurrentPlayerCommand';
 
 describe('JoinPlayerCommand', () => {
   let command: JoinPlayerCommand;
@@ -17,6 +18,8 @@ describe('JoinPlayerCommand', () => {
     TestBed.configureTestingModule({
       providers: [
         JoinPlayerCommand,
+        SetCurrentPlayerCommand,
+        PlayerSessionService,
         { provide: PlayerRepository, useValue: fakeRepository },
         { provide: StorageRepository, useClass: FakeStorageRepository },
       ],

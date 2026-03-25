@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
 import { JoinPlayerCommand } from '../../auth/commands/JoinPlayerCommand';
+import { SetCurrentPlayerCommand } from '../../auth/commands/SetCurrentPlayerCommand';
 import { LocalStoragePlayerRepository } from '../../player/repositories/LocalStoragePlayerRepository';
 import { PlayerRepository } from '../../player/repositories/PlayerRepository';
 import { LocalStorageRepository } from '../../shared/storage/repositories/LocalStorageRepository';
@@ -20,6 +21,7 @@ describe('HomePage', () => {
         { provide: StorageRepository, useClass: LocalStorageRepository },
         { provide: PlayerRepository, useClass: LocalStoragePlayerRepository },
         JoinPlayerCommand,
+        SetCurrentPlayerCommand,
       ],
     }).compileComponents();
 
