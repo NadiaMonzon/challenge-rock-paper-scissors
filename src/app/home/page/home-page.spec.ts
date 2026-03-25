@@ -17,21 +17,16 @@ describe('HomePage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HomePage],
-      providers: [
-        provideRouter([]),
-        { provide: StorageRepository, useClass: FakeStorageRepository },
-        { provide: PlayerRepository, useClass: FakePlayerRepository },
-        JoinPlayerCommand,
-        SetCurrentPlayerCommand,
-        CurrentPlayerStore,
-      ],
+      providers: [provideRouter([])],
     })
       .overrideComponent(HomePage, {
         set: {
           providers: [
+            { provide: StorageRepository, useClass: FakeStorageRepository },
             { provide: PlayerRepository, useClass: FakePlayerRepository },
             SetCurrentPlayerCommand,
             JoinPlayerCommand,
+            CurrentPlayerStore,
           ],
         },
       })
