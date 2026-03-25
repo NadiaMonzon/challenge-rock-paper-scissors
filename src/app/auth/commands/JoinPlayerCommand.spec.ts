@@ -4,7 +4,7 @@ import { FakePlayerRepository } from '../../player/repositories/FakePlayerReposi
 import { PlayerRepository } from '../../player/repositories/PlayerRepository';
 import { FakeStorageRepository } from '../../shared/storage/repositories/FakeStorageRepository';
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
-import { PlayerSessionService } from '../services/PlayerSessionService';
+import { CurrentPlayerStore } from '../store/CurrentPlayerStore';
 import { JoinPlayerCommand } from './JoinPlayerCommand';
 import { SetCurrentPlayerCommand } from './SetCurrentPlayerCommand';
 
@@ -19,7 +19,7 @@ describe('JoinPlayerCommand', () => {
       providers: [
         JoinPlayerCommand,
         SetCurrentPlayerCommand,
-        PlayerSessionService,
+        CurrentPlayerStore,
         { provide: PlayerRepository, useValue: fakeRepository },
         { provide: StorageRepository, useClass: FakeStorageRepository },
       ],
@@ -35,7 +35,7 @@ describe('JoinPlayerCommand', () => {
   });
 
   it('should set the current player in the session', () => {
-    const playerSession = TestBed.inject(PlayerSessionService);
+    const playerSession = TestBed.inject(CurrentPlayerStore);
     const fakePlayer = { name: 'Alice' } as PlayerModel;
     vitest.spyOn(fakeRepository, 'findOrCreate').mockReturnValue(fakePlayer);
     command.execute('Alice');

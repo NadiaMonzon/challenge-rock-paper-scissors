@@ -6,7 +6,7 @@ const CURRENT_PLAYER_KEY = 'currentPlayer';
 
 export { CURRENT_PLAYER_KEY };
 
-export class PlayerSessionService {
+export class CurrentPlayerStore {
   private storageRepository = inject(StorageRepository);
 
   readonly currentPlayer = signal<PlayerModel | null>(
