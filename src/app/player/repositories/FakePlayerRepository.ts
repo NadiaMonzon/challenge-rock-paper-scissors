@@ -9,4 +9,8 @@ export class FakePlayerRepository extends PlayerRepository {
   save(): void {
     // no-op fake
   }
+
+  getAllPlayers(): PlayerModel[] {
+    return [];
+  }
 }
