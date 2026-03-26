@@ -4,4 +4,13 @@ button img {
 
 .game__page {
   margin-top: 2rem;
+  max-width: 360px;
+}
+
+fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.5rem;
+  row-gap: 0.2rem;
 }

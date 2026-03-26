@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { FakeStorageRepository } from '../../shared/storage/repositories/FakeStorageRepository';
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
 import type { PlayerModel } from '../models/PlayerModel';
-import { LocalStoragePlayerRepository } from './LocalStoragePlayerRepository';
+import { LocalStoragePlayerRepository, PLAYERS_KEY } from './LocalStoragePlayerRepository';
 
 describe('LocalStoragePlayerRepository', () => {
   let repository: LocalStoragePlayerRepository;
@@ -33,7 +33,7 @@ describe('LocalStoragePlayerRepository', () => {
 
     it('should persist the new player in storage', () => {
       repository.findOrCreate('Alice');
-      const players = storageRepository.get<PlayerModel[]>('players');
+      const players = storageRepository.get<PlayerModel[]>(PLAYERS_KEY);
       expect(players?.length).toBe(1);
       expect(players?.[0]?.name).toBe('Alice');
     });
@@ -53,7 +53,7 @@ describe('LocalStoragePlayerRepository', () => {
 
     it('should not create a duplicate in storage', () => {
       repository.findOrCreate('Alice');
-      const players = storageRepository.get<PlayerModel[]>('players');
+      const players = storageRepository.get<PlayerModel[]>(PLAYERS_KEY);
       expect(players?.length).toBe(1);
     });
   });

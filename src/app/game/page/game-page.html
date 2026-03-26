@@ -4,8 +4,18 @@
     </header>
 
     <fieldset>
+        <legend>Game mode:</legend>
+        @for (mode of gameModes; track mode.value) {
+        <input type="radio" name="game-mode" [id]="mode.value" [value]="mode.value"
+            [checked]="selectedGameMode() === mode.value" [disabled]="isRevealing()"
+            (change)="onSelectGameMode(mode.value)" />
+        <label [htmlFor]="mode.value">{{ mode.label }}</label>
+        }
+    </fieldset>
+
+    <fieldset>
         <legend>Choose your move</legend>
-        @for (move of moves; track move) {
+        @for (move of availableMoves(); track move) {
         <button (click)="onSelectMove(move)" [disabled]="isRevealing()" [attr.aria-pressed]="player1Move() === move"
             [attr.aria-label]="move">
             <img [src]="'assets/moves/jmh-' + move + '_l.png'" [alt]="move + ' icon'" [title]="move + ' icon'">

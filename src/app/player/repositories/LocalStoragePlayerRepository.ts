@@ -3,23 +3,25 @@ import { StorageRepository } from '../../shared/storage/repositories/StorageRepo
 import type { PlayerModel } from '../models/PlayerModel';
 import type { PlayerRepository } from './PlayerRepository';
 
+export const PLAYERS_KEY = 'players';
+
 export class LocalStoragePlayerRepository implements PlayerRepository {
   private storageRepository = inject(StorageRepository);
 
   findOrCreate(name: string): PlayerModel {
-    const players = this.storageRepository.get<PlayerModel[]>('players') ?? [];
+    const players = this.storageRepository.get<PlayerModel[]>(PLAYERS_KEY) ?? [];
     const existing = players.find((p) => p.name === name);
     if (existing) return existing;
 
     const newPlayer: PlayerModel = { id: Date.now(), name, score: 0 };
-    this.storageRepository.set('players', [...players, newPlayer]);
+    this.storageRepository.set(PLAYERS_KEY, [...players, newPlayer]);
     return newPlayer;
   }
 
   save(player: PlayerModel): void {
-    const playersList = this.storageRepository.get<PlayerModel[]>('players') ?? [];
+    const playersList = this.storageRepository.get<PlayerModel[]>(PLAYERS_KEY) ?? [];
     this.storageRepository.set(
-      'players',
+      PLAYERS_KEY,
       playersList.map((storedPlayer) => (storedPlayer.id === player.id ? player : storedPlayer)),
     );
   }

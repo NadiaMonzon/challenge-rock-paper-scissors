@@ -9,7 +9,8 @@ import { GetRandomMoveService } from '../services/GetRandomMoveService';
 import { GetWinnerService } from '../services/GetWinnerService';
 import { SavePlayerScoreService } from '../services/SavePlayerScoreService';
 
-const MOVES: GameMove[] = ['rock', 'paper', 'scissors'];
+const CLASSIC_MOVES: GameMove[] = ['rock', 'paper', 'scissors'];
+const LIZARD_SPOCK_MOVES: GameMove[] = ['rock', 'paper', 'scissors', 'lizard', 'spock'];
 
 @Component({
   selector: 'app-game-page',
@@ -38,7 +39,16 @@ export class GamePage {
   private getRandomMoveService = inject(GetRandomMoveService);
   private savePlayerScoreService = inject(SavePlayerScoreService);
 
-  protected readonly moves = MOVES;
+  protected gameModes = [
+    { label: 'Classic', value: 'classic' },
+    { label: 'Lizard-Spock', value: 'lizard-spock' },
+  ] as const;
+  protected selectedGameMode = signal<'classic' | 'lizard-spock'>('classic');
+  protected availableMoves = computed(() => {
+    const hasLizardSpock = this.selectedGameMode() === 'lizard-spock';
+    return hasLizardSpock ? LIZARD_SPOCK_MOVES : CLASSIC_MOVES;
+  });
+
   protected player1Move = signal<GameMove | null>(null);
   protected oppponentMove = signal<GameMove | null>(null);
   protected result = signal<GameResult | null>(null);
@@ -55,8 +65,13 @@ export class GamePage {
     this.result.set(null);
     this.isRevealing.set(true);
 
+    this.determineGameOutcome(player1Move);
+  }
+
+  private determineGameOutcome(player1Move: GameMove): void {
     setTimeout(() => {
-      const machineMove = this.getRandomMoveService.execute();
+      const hasLizardSpock = this.selectedGameMode() === 'lizard-spock';
+      const machineMove = this.getRandomMoveService.execute(hasLizardSpock);
       this.oppponentMove.set(machineMove);
       const gameResult = this.getWinnerService.execute(player1Move, machineMove);
       this.result.set(gameResult);
@@ -70,5 +85,12 @@ export class GamePage {
         navigator.vibrate?.(300);
       }
     }, 1000);
+  }
+
+  protected onSelectGameMode(mode: 'classic' | 'lizard-spock'): void {
+    this.selectedGameMode.set(mode);
+    this.player1Move.set(null);
+    this.oppponentMove.set(null);
+    this.result.set(null);
   }
 }
