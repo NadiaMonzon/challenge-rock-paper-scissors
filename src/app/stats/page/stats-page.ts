@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import type { OnInit } from '@angular/core';
 import { Component, inject, signal } from '@angular/core';
 import type { GetPlayerListParams } from '../../player/models/GetPlayerListParams';
@@ -9,6 +10,7 @@ import { GetPlayerListQuery } from '../../player/services/GetPlayerListQuery';
   selector: 'app-stats-page',
   templateUrl: './stats-page.html',
   styleUrl: './stats-page.scss',
+  imports: [DatePipe],
   providers: [
     {
       provide: GetPlayerListQuery,
