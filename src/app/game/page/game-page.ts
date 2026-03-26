@@ -1,5 +1,4 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { RouterLinkWithHref } from '@angular/router';
 import { SetCurrentPlayerCommand } from '../../auth/commands/SetCurrentPlayerCommand';
 import { CurrentPlayerStore } from '../../auth/store/CurrentPlayerStore';
 import { LocalStoragePlayerRepository } from '../../player/repositories/LocalStoragePlayerRepository';
@@ -17,7 +16,6 @@ const LIZARD_SPOCK_MOVES: GameMove[] = ['rock', 'paper', 'scissors', 'lizard', '
   selector: 'app-game-page',
   templateUrl: './game-page.html',
   styleUrl: './game-page.scss',
-  imports: [RouterLinkWithHref],
   providers: [
     GetWinnerService,
     GetRandomMoveService,

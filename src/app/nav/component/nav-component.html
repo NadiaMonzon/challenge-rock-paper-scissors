@@ -2,9 +2,21 @@
     <nav>
         <ul>
             <li>Hi, {{ playerSession.currentPlayer()?.name }}</li>
-            <li><button (click)="onLogout()">
-                    <img [src]="'assets/logout-icon.svg'" alt="Log out icon" title="Log out">
-                </button></li>
+            <li>
+                <details class="dropdown">
+                    <summary>
+                        Menu
+                    </summary>
+                    <ul dir="rtl">
+                        <li><a routerLink="/game">Game</a></li>
+                        <li><a routerLink="/stats">Rankings</a></li>
+                        <li><button (click)="onLogout()">
+                                <img [src]="'assets/logout-icon.svg'" alt="Log out icon" title="Log out">
+                                Log out
+                            </button></li>
+                    </ul>
+                </details>
+            </li>
         </ul>
     </nav>
 </header>
