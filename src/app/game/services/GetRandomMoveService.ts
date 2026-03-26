@@ -12,13 +12,16 @@ export class GetRandomMoveService {
       return this.selectCounterMove(playerMove, hasLizardSpock);
     }
 
-    return moves[Math.floor(Math.random() * moves.length)] as GameMove;
+    const randomIndex = Math.floor(Math.random() * moves.length);
+
+    return moves[randomIndex] as GameMove;
   }
 
   private selectCounterMove(playerMove: GameMove, hasLizardSpock: boolean): GameMove {
     const counters = MACHINE_COUNTER_MOVES[playerMove].filter((counterMove) =>
       hasLizardSpock ? true : CLASSIC_MOVES.includes(counterMove),
     );
-    return counters[Math.floor(Math.random() * counters.length)] as GameMove;
+    const randomIndex = Math.floor(Math.random() * counters.length);
+    return counters[randomIndex] as GameMove;
   }
 }
