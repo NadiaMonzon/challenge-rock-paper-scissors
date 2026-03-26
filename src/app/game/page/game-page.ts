@@ -14,6 +14,7 @@ const MOVES: GameMove[] = ['rock', 'paper', 'scissors'];
 @Component({
   selector: 'app-game-page',
   templateUrl: './game-page.html',
+  styleUrl: './game-page.scss',
   providers: [
     GetWinnerService,
     GetRandomMoveService,
