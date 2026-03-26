@@ -120,7 +120,16 @@ describe('GamePage', () => {
       });
 
       describe('when the player loses', () => {
+        let vibrateSpy: ReturnType<typeof vitest.fn>;
+
         beforeEach(() => {
+          vibrateSpy = vitest.fn().mockReturnValue(true);
+          Object.defineProperty(navigator, 'vibrate', {
+            value: vibrateSpy,
+            writable: true,
+            configurable: true,
+          });
+
           fakeGetWinner.execute.mockReturnValue('lose');
           fakeSaveScore.execute.mockClear();
 
@@ -139,6 +148,10 @@ describe('GamePage', () => {
 
         it('should not call savePlayerScoreService', () => {
           expect(fakeSaveScore.execute).not.toHaveBeenCalled();
+        });
+
+        it('should vibrate the device for 300ms', () => {
+          expect(vibrateSpy).toHaveBeenCalledWith(300);
         });
       });
 

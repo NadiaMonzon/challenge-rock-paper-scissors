@@ -65,6 +65,10 @@ export class GamePage {
       if (gameResult === 'win') {
         this.savePlayerScoreService.execute();
       }
+
+      if (gameResult === 'lose') {
+        navigator.vibrate?.(300);
+      }
     }, 1000);
   }
 }
