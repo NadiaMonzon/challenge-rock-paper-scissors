@@ -121,6 +121,10 @@ describe('GamePage', () => {
         expect(fixture.nativeElement.textContent).toContain('scissors');
       });
 
+      it('should request the machine move with player move and moderate difficulty', () => {
+        expect(fakeGetRandomMove.execute).toHaveBeenCalledWith(false, 'rock', 0.6);
+      });
+
       it('should re-enable the buttons', () => {
         const buttons = fixture.debugElement.queryAll(By.css('fieldset button'));
         expect(buttons.every((b) => !b.nativeElement.disabled)).toBe(true);
@@ -217,7 +221,7 @@ describe('GamePage', () => {
           fixture.detectChanges();
           vitest.advanceTimersByTime(1000);
           fixture.detectChanges();
-          expect(fakeGetRandomMove.execute).toHaveBeenLastCalledWith(true);
+          expect(fakeGetRandomMove.execute).toHaveBeenLastCalledWith(true, 'lizard', 0.6);
         });
       });
     });

@@ -71,7 +71,7 @@ export class GamePage {
   private determineGameOutcome(player1Move: GameMove): void {
     setTimeout(() => {
       const hasLizardSpock = this.selectedGameMode() === 'lizard-spock';
-      const machineMove = this.getRandomMoveService.execute(hasLizardSpock);
+      const machineMove = this.getRandomMoveService.execute(hasLizardSpock, player1Move, 0.6);
       this.oppponentMove.set(machineMove);
       const gameResult = this.getWinnerService.execute(player1Move, machineMove);
       this.result.set(gameResult);
