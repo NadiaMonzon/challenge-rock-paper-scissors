@@ -14,7 +14,12 @@ export class LocalStoragePlayerRepository implements PlayerRepository {
     const existing = players.find((p) => p.name === name);
     if (existing) return existing;
 
-    const newPlayer: PlayerModel = { id: Date.now(), name, score: 0 };
+    const newPlayer: PlayerModel = {
+      id: String(Date.now()),
+      name,
+      score: 0,
+      createdAt: new Date().toISOString(),
+    };
     this.storageRepository.set(PLAYERS_KEY, [...players, newPlayer]);
     return newPlayer;
   }

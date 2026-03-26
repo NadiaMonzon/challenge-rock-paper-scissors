@@ -42,9 +42,9 @@ describe('LocalStoragePlayerRepository', () => {
   describe('getAllPlayers', () => {
     beforeEach(() => {
       storageRepository.set<PlayerModel[]>(PLAYERS_KEY, [
-        { id: 1, name: 'Charlie', score: 20 },
-        { id: 2, name: 'Alice', score: 10 },
-        { id: 3, name: 'Bob', score: 30 },
+        { id: '1', name: 'Charlie', score: 20, createdAt: new Date().toISOString() },
+        { id: '2', name: 'Alice', score: 10, createdAt: new Date().toISOString() },
+        { id: '3', name: 'Bob', score: 30, createdAt: new Date().toISOString() },
       ]);
     });
 

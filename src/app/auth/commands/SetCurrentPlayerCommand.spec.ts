@@ -10,7 +10,12 @@ describe('SetCurrentPlayerCommand', () => {
   let store: CurrentPlayerStore;
   let fakeStorage: FakeStorageRepository;
 
-  const player: PlayerModel = { id: 1, name: 'Alice', score: 0 };
+  const player: PlayerModel = {
+    id: '1',
+    name: 'Alice',
+    score: 0,
+    createdAt: new Date().toISOString(),
+  };
 
   beforeEach(() => {
     fakeStorage = new FakeStorageRepository();

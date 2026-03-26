@@ -23,8 +23,8 @@ describe('GetPlayerListQuery', () => {
 
   it('should return the players provided by the repository', () => {
     const players: PlayerModel[] = [
-      { id: 1, name: 'Alice', score: 10 },
-      { id: 2, name: 'Bob', score: 8 },
+      { id: '1', name: 'Alice', score: 10, createdAt: new Date().toISOString() },
+      { id: '2', name: 'Bob', score: 8, createdAt: new Date().toISOString() },
     ];
     vitest.spyOn(fakePlayerRepository, 'getAllPlayers').mockReturnValue(players);
 

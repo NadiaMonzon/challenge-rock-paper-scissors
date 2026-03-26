@@ -10,7 +10,12 @@ import { GetWinnerService } from '../services/GetWinnerService';
 import { SavePlayerScoreService } from '../services/SavePlayerScoreService';
 import { GamePage } from './game-page';
 
-const PLAYER: PlayerModel = { id: 1, name: 'Alice', score: 3 };
+const PLAYER: PlayerModel = {
+  id: '1',
+  name: 'Alice',
+  score: 3,
+  createdAt: new Date().toISOString(),
+};
 
 describe('GamePage', () => {
   let fixture: ComponentFixture<GamePage>;
