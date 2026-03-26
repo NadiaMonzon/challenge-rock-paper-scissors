@@ -8,7 +8,7 @@
         @for (move of moves; track move) {
         <button (click)="onSelectMove(move)" [disabled]="isRevealing()" [attr.aria-pressed]="player1Move() === move"
             [attr.aria-label]="move">
-            {{ move }}
+            <img src="../../../assets/moves/jmh-{{move}}_l.png" alt="{{ move }} icon">
         </button>
         }
     </fieldset>
