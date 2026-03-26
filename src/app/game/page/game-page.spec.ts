@@ -164,9 +164,9 @@ describe('GamePage', () => {
           fixture.detectChanges();
         });
 
-        it('should show "You lose."', () => {
+        it('should show "You lose :("', () => {
           const status = fixture.debugElement.query(By.css('[role="status"]'));
-          expect(status.nativeElement.textContent).toContain('You lose.');
+          expect(status.nativeElement.textContent).toContain('You lose :(');
         });
 
         it('should not call savePlayerScoreService', () => {
@@ -191,9 +191,9 @@ describe('GamePage', () => {
           fixture.detectChanges();
         });
 
-        it('should show "It\'s a tie!"', () => {
+        it('should show "It\'s a tie :|"', () => {
           const status = fixture.debugElement.query(By.css('[role="status"]'));
-          expect(status.nativeElement.textContent).toContain("It's a tie!");
+          expect(status.nativeElement.textContent).toContain("It's a tie :|");
         });
 
         it('should not call savePlayerScoreService', () => {
