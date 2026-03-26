@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1774565341046,
+  "timestamp": 1774565766061,
   "index": "/challenge-rock-paper-scissors/index.html",
   "assetGroups": [
     {
@@ -23,7 +23,7 @@
         "/challenge-rock-paper-scissors/chunk-Z4OFLX4I.js",
         "/challenge-rock-paper-scissors/favicon.ico",
         "/challenge-rock-paper-scissors/index.html",
-        "/challenge-rock-paper-scissors/main-RCLTYKKW.js",
+        "/challenge-rock-paper-scissors/main-3TS5IMYU.js",
         "/challenge-rock-paper-scissors/manifest.webmanifest",
         "/challenge-rock-paper-scissors/styles-CHER4FH3.css"
       ],
@@ -86,8 +86,8 @@
     "/challenge-rock-paper-scissors/icons/icon-512x512.png": "cd1e4294af7017e737fc0bc1e88f9ad71ca1dd83",
     "/challenge-rock-paper-scissors/icons/icon-72x72.png": "cbb5106a33491e1d94be7f651acd6e02dd5ffb59",
     "/challenge-rock-paper-scissors/icons/icon-96x96.png": "ee4e4efe966246f8074075f042e14e603775adf7",
-    "/challenge-rock-paper-scissors/index.html": "5160c9fa387d52735e5545b18db9dd51e0026660",
-    "/challenge-rock-paper-scissors/main-RCLTYKKW.js": "a194d46bb62cb610b665883871440789a306b288",
+    "/challenge-rock-paper-scissors/index.html": "84c6b4f2b3d01ec26f0fef6d0064b4907f119e3a",
+    "/challenge-rock-paper-scissors/main-3TS5IMYU.js": "5c5a425cdbb2383a31e30cd2196a7db23b618ce1",
     "/challenge-rock-paper-scissors/manifest.webmanifest": "3ccde7700e05c921c43960b9737d6c6d8a0ab3cb",
     "/challenge-rock-paper-scissors/styles-CHER4FH3.css": "ee15d9d020833382ba219a3ac5426b27b5c76f86"
   },
