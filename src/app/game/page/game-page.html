@@ -1,49 +1,69 @@
 <section aria-label="Rock Paper Scissors game" class="game__page">
-    <header>
-        <p>{{ playerName() }}'s score: <strong>{{ score() }}</strong></p>
-    </header>
+  <header>
+    <p>
+      {{ playerName() }}'s score: <strong>{{ score() }}</strong>
+    </p>
+  </header>
 
-    <fieldset>
-        <legend>Game mode:</legend>
-        @for (mode of gameModes; track mode.value) {
-        <input type="radio" name="game-mode" [id]="mode.value" [value]="mode.value"
-            [checked]="selectedGameMode() === mode.value" [disabled]="isRevealing()"
-            (change)="onSelectGameMode(mode.value)" />
-        <label [htmlFor]="mode.value">{{ mode.label }}</label>
-        }
-    </fieldset>
-
-    <fieldset>
-        <legend>Choose your move</legend>
-        @for (move of availableMoves(); track move) {
-        <button (click)="onSelectMove(move)" [disabled]="isRevealing()" [attr.aria-pressed]="player1Move() === move"
-            [attr.aria-label]="move">
-            <img [src]="'assets/moves/jmh-' + move + '_l.png'" [alt]="move + ' icon'" [title]="move + ' icon'">
-        </button>
-        }
-    </fieldset>
-
-    @if (player1Move()) {
-    <p>Your move: <strong>{{ player1Move() }}</strong></p>
+  <fieldset>
+    <legend>Game mode:</legend>
+    @for (mode of gameModes; track mode.value) {
+      <input
+        type="radio"
+        name="game-mode"
+        [id]="mode.value"
+        [value]="mode.value"
+        [checked]="selectedGameMode() === mode.value"
+        [disabled]="isRevealing()"
+        (change)="onSelectGameMode(mode.value)"
+      />
+      <label [htmlFor]="mode.value">{{ mode.label }}</label>
     }
+  </fieldset>
 
-    <div aria-live="polite" aria-atomic="true">
-        @if (isRevealing()) {
-        <p aria-busy="true">Machine is thinking</p>
-        } @else if (oppponentMove()) {
-        <p>Machine's move: <strong>{{ oppponentMove() }}</strong></p>
+  <fieldset>
+    <legend>Choose your move</legend>
+    @for (move of availableMoves(); track move) {
+      <button
+        (click)="onSelectMove(move)"
+        [disabled]="isRevealing()"
+        [attr.aria-pressed]="player1Move() === move"
+        [attr.aria-label]="move"
+      >
+        <img
+          [src]="'assets/moves/jmh-' + move + '_l.png'"
+          [alt]="move + ' icon'"
+          [title]="move + ' icon'"
+        />
+      </button>
+    }
+  </fieldset>
 
-        @switch (result()) {
+  @if (player1Move()) {
+    <p>
+      Your move: <strong>{{ player1Move() }}</strong>
+    </p>
+  }
+
+  <div aria-live="polite" aria-atomic="true">
+    @if (isRevealing()) {
+      <p aria-busy="true">Machine is thinking</p>
+    } @else if (oppponentMove()) {
+      <p>
+        Machine's move: <strong>{{ oppponentMove() }}</strong>
+      </p>
+
+      @switch (result()) {
         @case ('win') {
-        <p role="status">You win!</p>
+          <p role="status">You win! :D</p>
         }
         @case ('lose') {
-        <p role="status">You lose.</p>
+          <p role="status">You lose :(</p>
         }
         @case ('tie') {
-        <p role="status">It's a tie!</p>
+          <p role="status">It's a tie :|</p>
         }
-        }
-        }
-    </div>
+      }
+    }
+  </div>
 </section>
