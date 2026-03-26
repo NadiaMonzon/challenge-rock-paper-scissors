@@ -1,0 +1,1 @@
+import{a,b as o}from"./chunk-OPIMFTCT.js";import{K as e,mb as t}from"./chunk-Z4OFLX4I.js";var s=class{};var l=class{storageRepository=e(t);playerSession=e(o);execute(r){this.storageRepository.set(a,r),this.playerSession.currentPlayer.set(r)}};export{s as a,l as b};
