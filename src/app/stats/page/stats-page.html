@@ -1,1 +1,18 @@
 <h1>im stats</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (player of playerList(); track player){
+        <tr>
+            <td>{{ player.name }}</td>
+            <td>{{ player.score }}</td>
+        </tr>
+        }
+    </tbody>
+</table>
