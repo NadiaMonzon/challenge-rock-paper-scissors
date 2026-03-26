@@ -13,7 +13,12 @@ describe('SavePlayerScoreService', () => {
   let playerStore: CurrentPlayerStore;
   let fakePlayerRepository: FakePlayerRepository;
 
-  const player: PlayerModel = { id: 1, name: 'Alice', score: 2 };
+  const player: PlayerModel = {
+    id: '1',
+    name: 'Alice',
+    score: 2,
+    createdAt: new Date().toISOString(),
+  };
 
   beforeEach(() => {
     fakePlayerRepository = new FakePlayerRepository();

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { LogoutCommand } from '../../auth/commands/LogoutCommand';
 import { CurrentPlayerStore } from '../../auth/store/CurrentPlayerStore';
 
@@ -7,7 +7,7 @@ import { CurrentPlayerStore } from '../../auth/store/CurrentPlayerStore';
   selector: 'app-nav',
   templateUrl: './nav-component.html',
   styleUrl: './nav-component.scss',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLinkWithHref],
   providers: [LogoutCommand],
 })
 export class NavComponent {

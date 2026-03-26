@@ -1,6 +1,6 @@
-
 export interface PlayerModel {
-  id: number;
+  id: string;
   name: string;
   score: number;
+  createdAt: string;
 }

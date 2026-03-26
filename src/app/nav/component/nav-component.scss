@@ -14,7 +14,13 @@ ul {
   align-items: center;
 }
 
+button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 button img {
-  width: 24px;
-  color: white;
+  width: 20px;
+  flex-shrink: 0;
 }
