@@ -65,6 +65,24 @@ describe('GamePage', () => {
     expect(score.textContent).toBe('3');
   });
 
+  it('should show 3 move options by default in classic mode', () => {
+    const moveButtons = fixture.debugElement.queryAll(By.css('fieldset button'));
+    expect(moveButtons).toHaveLength(3);
+    expect(fixture.debugElement.query(By.css('button[aria-label="lizard"]'))).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('button[aria-label="spock"]'))).toBeFalsy();
+  });
+
+  it('should show 5 move options when lizard-spock mode is selected', () => {
+    const lizardSpockRadio = fixture.debugElement.query(By.css('input[value="lizard-spock"]'));
+    lizardSpockRadio.triggerEventHandler('change', { target: { value: 'lizard-spock' } });
+    fixture.detectChanges();
+
+    const moveButtons = fixture.debugElement.queryAll(By.css('fieldset button'));
+    expect(moveButtons).toHaveLength(5);
+    expect(fixture.debugElement.query(By.css('button[aria-label="lizard"]'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('button[aria-label="spock"]'))).toBeTruthy();
+  });
+
   describe('when a move is selected', () => {
     beforeEach(() => {
       vitest.useFakeTimers();
@@ -175,6 +193,26 @@ describe('GamePage', () => {
 
         it('should not call savePlayerScoreService', () => {
           expect(fakeSaveScore.execute).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('when lizard-spock mode is selected and a move is played', () => {
+        it('should request a random move including lizard-spock options', () => {
+          fakeGetWinner.execute.mockReturnValue('win');
+
+          const lizardSpockRadio = fixture.debugElement.query(
+            By.css('input[value="lizard-spock"]'),
+          );
+          lizardSpockRadio.triggerEventHandler('change', { target: { value: 'lizard-spock' } });
+          fixture.detectChanges();
+
+          fixture.debugElement
+            .query(By.css('button[aria-label="lizard"]'))
+            .triggerEventHandler('click', null);
+          fixture.detectChanges();
+          vitest.advanceTimersByTime(1000);
+          fixture.detectChanges();
+          expect(fakeGetRandomMove.execute).toHaveBeenLastCalledWith(true);
         });
       });
     });
