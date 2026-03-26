@@ -1,9 +1,27 @@
 <h1>im stats</h1>
 
-<table>
+<section class="stats__filters">
+    <fieldset>
+        <legend>Sort by:</legend>
+        <div role="group">
+            <select (change)="onChangeSortBy($event)" [disabled]="isLoading()" id="sort-by" name="sort-by">
+                <option value="score" [selected]="filters().sort?.by === 'score'">Score</option>
+                <option value="name" [selected]="filters().sort?.by === 'name'">Name</option>
+            </select>
+            <button class="contrast" (click)="onToggleSortOrder()" [disabled]="isLoading()"
+                [attr.data-tooltip]="'Sort order: ' + (filters().sort?.order === 'asc' ? 'Ascending' : 'Descending')">
+                <img [src]="'assets/sort-' + (filters().sort?.order === 'asc' ? 'asc' : 'desc') + '.svg'"
+                    alt="Sort order icon" title="Toggle sort order">
+            </button>
+        </div>
+    </fieldset>
+</section>
+
+@if(!isLoading() && playerList().length > 0){<table>
     <thead>
         <tr>
             <th>Player</th>
+            <th>Created at</th>
             <th>Score</th>
         </tr>
     </thead>
@@ -11,8 +29,17 @@
         @for (player of playerList(); track player){
         <tr>
             <td>{{ player.name }}</td>
+            <td>{{ player.createdAt }}</td>
             <td>{{ player.score }}</td>
         </tr>
         }
     </tbody>
-</table>
+</table>}
+
+@if (!isLoading() && playerList().length === 0) {
+<p>No players found. Play some games to see your score here!</p>
+}
+
+@if(isLoading()){
+<p aria-busy="true">Loading player stats...</p>
+}
