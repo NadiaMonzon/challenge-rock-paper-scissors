@@ -63,28 +63,37 @@ export class GamePage {
     this.player1Move.set(player1Move);
     this.oppponentMove.set(null);
     this.result.set(null);
-    this.isRevealing.set(true);
 
     this.determineGameOutcome(player1Move);
   }
 
   private determineGameOutcome(player1Move: GameMove): void {
+    this.isRevealing.set(true);
     setTimeout(() => {
       const hasLizardSpock = this.selectedGameMode() === 'lizard-spock';
       const machineMove = this.getRandomMoveService.execute(hasLizardSpock, player1Move, 0.6);
       this.oppponentMove.set(machineMove);
-      const gameResult = this.getWinnerService.execute(player1Move, machineMove);
-      this.result.set(gameResult);
-      this.isRevealing.set(false);
-
-      if (gameResult === 'win') {
-        this.savePlayerScoreService.execute();
-      }
-
-      if (gameResult === 'lose') {
-        navigator.vibrate?.(300);
-      }
+      this.processGameOutcome(player1Move, machineMove);
     }, 1000);
+  }
+
+  private processGameOutcome(player1Move: GameMove, player2Move: GameMove): void {
+    const gameResult = this.determineGameResult(player1Move, player2Move);
+
+    if (gameResult === 'win') {
+      this.savePlayerScoreService.execute();
+    }
+
+    if (gameResult === 'lose') {
+      navigator.vibrate?.(300);
+    }
+  }
+
+  private determineGameResult(player1Move: GameMove, player2Move: GameMove): GameResult {
+    const gameResult = this.getWinnerService.execute(player1Move, player2Move);
+    this.result.set(gameResult);
+    this.isRevealing.set(false);
+    return gameResult;
   }
 
   protected onSelectGameMode(mode: 'classic' | 'lizard-spock'): void {
