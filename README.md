@@ -1,59 +1,101 @@
-# ChallengeRockPaperScissors
+# Challenge Rock Paper Scissors
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Angular application to play Rock Paper Scissors.
 
-## Development server
+## Prerequisites
 
-To start a local development server, run:
+- Node.js 20.19.0 or higher
+- npm 11 or higher
 
-```bash
-ng serve
-```
+## Local setup and run
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Install dependencies:
 
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+2. Start the development server:
 
 ```bash
-ng generate --help
+npm run start
 ```
 
-## Building
+3. Open the app in your browser:
 
-To build the project run:
+```text
+http://localhost:4200/
+```
+
+## Production URL
+
+The app is deployed at:
+
+```text
+https://nadiamonzon.github.io/challenge-rock-paper-scissors/
+```
+
+## Available scripts
+
+- Start local development:
 
 ```bash
-ng build
+npm run start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- Build for production:
 
 ```bash
-ng test
+npm run build
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+- Run unit tests (Vitest):
 
 ```bash
-ng e2e
+npm run test
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- Run unit tests with coverage:
 
-## Additional Resources
+```bash
+npm run test:cov
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Run static analysis:
+
+```bash
+npm run lint
+```
+
+- Format HTML files with Prettier:
+
+```bash
+npm run format
+```
+
+- Check formatting without changing files:
+
+```bash
+npm run format:check
+```
+
+- Deploy with Angular CLI (ng deploy):
+
+```bash
+npm run deploy
+```
+
+## Deployment notes
+
+The deployment script runs ng deploy. This project includes the angular-cli-ghpages dependency, so the typical deployment target is GitHub Pages if the deploy configuration is defined in angular.json.
+
+Before your first deployment, verify that:
+
+- The deploy configuration exists in angular.json.
+- The remote repository and GitHub permissions are correctly configured.
+
+## References
+
+- Angular CLI: https://angular.dev/tools/cli
+- Vitest: https://vitest.dev/
+- Prettier: https://prettier.io/
