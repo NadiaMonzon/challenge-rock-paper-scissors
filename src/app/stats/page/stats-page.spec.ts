@@ -1,5 +1,6 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import type { PlayerModel } from '../../player/models/PlayerModel';
 import { FakePlayerRepository } from '../../player/repositories/FakePlayerRepository';
 import { GetPlayerListQuery } from '../../player/services/GetPlayerListQuery';
@@ -62,7 +63,7 @@ describe('StatsPage', () => {
       expect(fixture.componentInstance['isLoading']()).toBeFalsy();
     });
 
-    it('should populate playerList with the result from GetPlayerListQuery', () => {
+    it('should populate playerList with the result from GetPlayerListQuery and render the player table', () => {
       const mockPlayers: PlayerModel[] = [
         { id: '1', name: 'Alice', score: 10, createdAt: '2026-01-01' },
         { id: '2', name: 'Bob', score: 7, createdAt: '2026-01-02' },
@@ -72,8 +73,11 @@ describe('StatsPage', () => {
         .mockReturnValue(mockPlayers);
 
       fixture.componentInstance['getPlayerList']();
+      fixture.detectChanges();
+      const tableRowsAfterRender = fixture.debugElement.queryAll(By.css('tbody tr'));
 
       expect(fixture.componentInstance['playerList']()).toEqual(mockPlayers);
+      expect(tableRowsAfterRender.length).toBe(mockPlayers.length);
     });
 
     it('should use the current filters when fetching players', () => {
@@ -91,12 +95,34 @@ describe('StatsPage', () => {
   });
 
   describe('when the sort by field is changed', () => {
-    it('should update the sort "by" field when sort by changes', () => {
-      const event = { target: { value: 'name' } } as unknown as Event;
+    it('should render score selected and name unselected by default, even when filters are empty', () => {
+      fixture.componentInstance['filters'].set({});
+      fixture.detectChanges();
 
-      fixture.componentInstance['onChangeSortBy'](event);
+      const selectElement = fixture.debugElement.query(By.css('select'));
+      const scoreOption = selectElement.query(By.css('option[value="score"]'))
+        .nativeElement as HTMLOptionElement;
+      const nameOption = selectElement.query(By.css('option[value="name"]'))
+        .nativeElement as HTMLOptionElement;
+
+      expect(scoreOption.selected).toBeTruthy();
+      expect(nameOption.selected).toBeFalsy();
+    });
+
+    it('should update the sort "by" field when sort by changes', () => {
+      const selectElement = fixture.debugElement.query(By.css('select'));
+      selectElement.triggerEventHandler('change', {
+        target: { value: 'name' },
+      });
+      fixture.detectChanges();
+      const scoreOption = selectElement.query(By.css('option[value="score"]'))
+        .nativeElement as HTMLOptionElement;
+      const nameOption = selectElement.query(By.css('option[value="name"]'))
+        .nativeElement as HTMLOptionElement;
 
       expect(fixture.componentInstance['filters']().sort?.by).toBe('name');
+      expect(nameOption.selected).toBeTruthy();
+      expect(scoreOption.selected).toBeFalsy();
     });
 
     it('should keep the current sort order when sort by changes', () => {
@@ -125,11 +151,9 @@ describe('StatsPage', () => {
 
   describe('when the sort order is toggled', () => {
     it('should toggle sort order from "desc" to "asc"', () => {
-      fixture.componentInstance['filters'].set({
-        sort: { by: 'score', order: 'desc' },
-      });
-
-      fixture.componentInstance['onToggleSortOrder']();
+      const toggleButton = fixture.debugElement.query(By.css('button'));
+      toggleButton.triggerEventHandler('click', null);
+      fixture.detectChanges();
 
       expect(fixture.componentInstance['filters']().sort?.order).toBe('asc');
     });
@@ -154,5 +178,13 @@ describe('StatsPage', () => {
 
       expect(getPlayerListSpy).toHaveBeenCalled();
     });
+  });
+
+  it('should show a loading indicator while fetching players', () => {
+    fixture.componentInstance['isLoading'].set(true);
+    fixture.detectChanges();
+
+    const loadingIndicator = fixture.debugElement.query(By.css('p[aria-busy="true"]'));
+    expect(loadingIndicator).toBeTruthy();
   });
 });
