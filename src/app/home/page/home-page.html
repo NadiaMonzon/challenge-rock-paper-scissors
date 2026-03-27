@@ -1,17 +1,48 @@
 <h1>Create new player</h1>
 
-<label for="name">Name:</label>
+<label for="name">Player 1 name:</label>
 <input
   type="text"
   id="name"
   name="name"
   required
   (input)="onNameInput($event)"
-  [attr.aria-invalid]="!isValid() ? true : null"
+  [attr.aria-invalid]="!isPlayer1Valid() ? true : null"
   aria-describedby="invalid-helper"
 />
-@if (!isValid()) {
+@if (!isPlayer1Valid()) {
   <small id="invalid-helper"> Please provide a value! </small>
 }
 
-<button (click)="onJoin()" [disabled]="!isValid()">Join</button>
+<fieldset>
+  <legend>Modo de juego:</legend>
+  @for (option of playerCountOptions; track option.value) {
+    <input
+      type="radio"
+      name="player-count"
+      [id]="'player-count-' + option.value"
+      [value]="option.value"
+      [checked]="selectedPlayerCount() === option.value"
+      (change)="onSelectPlayerCount(option.value)"
+    />
+    <label [htmlFor]="'player-count-' + option.value">{{ option.label }}</label>
+  }
+</fieldset>
+
+@if (selectedPlayerCount() === 2) {
+  <label for="player-2-name">Player 2 name:</label>
+  <input
+    type="text"
+    id="player-2-name"
+    name="player-2-name"
+    required
+    (input)="onPlayer2NameInput($event)"
+    [attr.aria-invalid]="!isPlayer2Valid() ? true : null"
+    aria-describedby="invalid-player-2-helper"
+  />
+  @if (!isPlayer2Valid()) {
+    <small id="invalid-player-2-helper"> Please provide a value! </small>
+  }
+}
+
+<button (click)="onJoin()" [disabled]="!isFormValid()">Join</button>

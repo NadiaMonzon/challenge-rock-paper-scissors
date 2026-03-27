@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -11,6 +12,9 @@ import { FakeStorageRepository } from '../../shared/storage/repositories/FakeSto
 import { StorageRepository } from '../../shared/storage/repositories/StorageRepository';
 import { HomePage } from './home-page';
 
+@Component({ template: '' })
+class GamePageStub {}
+
 describe('HomePage', () => {
   let fixture: ComponentFixture<HomePage>;
 
@@ -18,7 +22,7 @@ describe('HomePage', () => {
     await TestBed.configureTestingModule({
       imports: [HomePage],
       providers: [
-        provideRouter([]),
+        provideRouter([{ path: 'game', component: GamePageStub }]),
         { provide: StorageRepository, useClass: FakeStorageRepository },
         JoinPlayerCommand,
         SetCurrentPlayerCommand,
@@ -33,7 +37,6 @@ describe('HomePage', () => {
     await TestBed.compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
-
     fixture.detectChanges();
   });
 
@@ -54,24 +57,22 @@ describe('HomePage', () => {
     });
 
     it('should mark the input as aria-invalid', () => {
-      const input = fixture.debugElement.query(By.css('input'));
+      const input = fixture.debugElement.query(By.css('input#name'));
       expect(input.nativeElement.getAttribute('aria-invalid')).toBe('true');
     });
 
-    it('should not navigate on join', () => {
-      const router = TestBed.inject(Router);
-      const navigateSpy = vitest.spyOn(router, 'navigate');
-
+    it('should not navigate on join', async () => {
       const button = fixture.debugElement.query(By.css('button'));
       button.nativeElement.click();
+      await fixture.whenStable();
 
-      expect(navigateSpy).not.toHaveBeenCalled();
+      expect(TestBed.inject(Router).url).toBe('/');
     });
   });
 
   describe('when the input has a value', () => {
     beforeEach(() => {
-      const input = fixture.debugElement.query(By.css('input'));
+      const input = fixture.debugElement.query(By.css('input#name'));
       input.nativeElement.value = 'Player 1';
       input.triggerEventHandler('input', { target: input.nativeElement });
       fixture.detectChanges();
@@ -88,24 +89,22 @@ describe('HomePage', () => {
     });
 
     it('should not mark the input as aria-invalid', () => {
-      const input = fixture.debugElement.query(By.css('input'));
+      const input = fixture.debugElement.query(By.css('input#name'));
       expect(input.nativeElement.getAttribute('aria-invalid')).toBeNull();
     });
 
-    it('should navigate on join', () => {
-      const router = TestBed.inject(Router);
-      const navigateSpy = vitest.spyOn(router, 'navigate');
-
+    it('should navigate to /game on join', async () => {
       const button = fixture.debugElement.query(By.css('button'));
       button.triggerEventHandler('click', null);
+      await fixture.whenStable();
 
-      expect(navigateSpy).toHaveBeenCalledExactlyOnceWith(['/game']);
+      expect(TestBed.inject(Router).url).toBe('/game');
     });
   });
 
   describe('when the input has only whitespace', () => {
     beforeEach(() => {
-      const input = fixture.debugElement.query(By.css('input'));
+      const input = fixture.debugElement.query(By.css('input#name'));
       input.nativeElement.value = '   ';
       input.triggerEventHandler('input', { target: input.nativeElement });
       fixture.detectChanges();
@@ -117,8 +116,70 @@ describe('HomePage', () => {
     });
 
     it('should mark the input as aria-invalid', () => {
-      const input = fixture.debugElement.query(By.css('input'));
+      const input = fixture.debugElement.query(By.css('input#name'));
       expect(input.nativeElement.getAttribute('aria-invalid')).toBe('true');
+    });
+  });
+
+  describe('when two-player mode is selected', () => {
+    beforeEach(() => {
+      const twoPlayersRadio = fixture.debugElement.query(By.css('input#player-count-2'));
+      twoPlayersRadio.triggerEventHandler('change', {
+        target: twoPlayersRadio.nativeElement,
+      });
+      fixture.detectChanges();
+    });
+
+    it('should show player 2 input', () => {
+      const player2Input = fixture.debugElement.query(By.css('input#player-2-name'));
+      expect(player2Input).toBeTruthy();
+    });
+
+    it('should keep join button disabled when player 2 name is empty', () => {
+      const player1Input = fixture.debugElement.query(By.css('input#name'));
+      player1Input.nativeElement.value = 'Player 1';
+      player1Input.triggerEventHandler('input', { target: player1Input.nativeElement });
+      fixture.detectChanges();
+
+      const player2Input = fixture.debugElement.query(By.css('input#player-2-name'));
+      expect(player2Input.nativeElement.getAttribute('aria-invalid')).toBe('true');
+
+      const button = fixture.debugElement.query(By.css('button'));
+      expect(button.nativeElement.disabled).toBeTruthy();
+    });
+
+    it('should enable join button when both names are valid', () => {
+      const player1Input = fixture.debugElement.query(By.css('input#name'));
+      player1Input.nativeElement.value = 'Player 1';
+      player1Input.triggerEventHandler('input', { target: player1Input.nativeElement });
+
+      const player2Input = fixture.debugElement.query(By.css('input#player-2-name'));
+      player2Input.nativeElement.value = 'Player 2';
+      player2Input.triggerEventHandler('input', { target: player2Input.nativeElement });
+
+      fixture.detectChanges();
+
+      const button = fixture.debugElement.query(By.css('button'));
+      expect(button.nativeElement.disabled).toBeFalsy();
+    });
+
+    it('should send both players on join', () => {
+      const joinPlayerCommand = fixture.debugElement.injector.get(JoinPlayerCommand);
+      const joinPlayerCommandSpy = vitest.spyOn(joinPlayerCommand, 'execute');
+
+      const player1Input = fixture.debugElement.query(By.css('input#name'));
+      player1Input.nativeElement.value = 'Player 1';
+      player1Input.triggerEventHandler('input', { target: player1Input.nativeElement });
+
+      const player2Input = fixture.debugElement.query(By.css('input#player-2-name'));
+      player2Input.nativeElement.value = 'Player 2';
+      player2Input.triggerEventHandler('input', { target: player2Input.nativeElement });
+      fixture.detectChanges();
+
+      const button = fixture.debugElement.query(By.css('button'));
+      button.triggerEventHandler('click', null);
+
+      expect(joinPlayerCommandSpy).toHaveBeenCalledExactlyOnceWith(['Player 1', 'Player 2']);
     });
   });
 });
